@@ -3,23 +3,75 @@
 {% block title %}Reservas{% endblock %}
 
 {% block content %}
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="h4 mb-0">Reservas</h1>
-    {% if not es_admin %}
-      <a class="btn btn-primary" href="{% url 'reservas:crear_reserva' %}">Crear reserva</a>
-    {% endif %}
+  <section class="page-hero mb-4">
+    <div class="row g-0 align-items-center">
+      <div class="col-12 col-lg-7 p-4 p-lg-5">
+        <span class="badge rounded-pill text-bg-light text-primary mb-3">
+          {% if es_admin %}Panel administrativo{% else %}Panel docente{% endif %}
+        </span>
+        <h1 class="display-6 fw-bold mb-3">Reservas de laboratorio</h1>
+        <p class="lead mb-0">
+          Consulta horarios, revisa estados y gestiona solicitudes desde una vista clara y organizada.
+        </p>
+      </div>
+      <div class="col-12 col-lg-5 page-hero-visual d-flex align-items-center justify-content-center p-4">
+        <div class="hero-device p-3">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <span class="badge badge-status badge-aprobada">Aprobada</span>
+            <span class="small text-muted">Laboratorio 2</span>
+          </div>
+          <div class="progress mb-3" role="progressbar" aria-label="Uso del laboratorio" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar bg-info" style="width: 70%"></div>
+          </div>
+          <div class="d-flex justify-content-between small text-muted">
+            <span>08:00</span>
+            <span>10:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-md-4">
+      <div class="stat-card rounded-4 p-3 h-100">
+        <p class="text-muted small mb-1">Total de reservas</p>
+        <p class="h3 fw-bold mb-0">{{ total_reservas }}</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="stat-card rounded-4 p-3 h-100">
+        <p class="text-muted small mb-1">Pendientes</p>
+        <p class="h3 fw-bold mb-0">{{ reservas_pendientes }}</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="stat-card rounded-4 p-3 h-100">
+        <p class="text-muted small mb-1">Aprobadas / Rechazadas</p>
+        <p class="h3 fw-bold mb-0">{{ reservas_aprobadas }} / {{ reservas_rechazadas }}</p>
+      </div>
+    </div>
   </div>
 
-  <div class="card shadow-sm">
-    <div class="card-body">
+  <div class="soft-card card border-0">
+    <div class="card-body p-0">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 p-3 p-lg-4 border-bottom">
+        <div>
+          <h2 class="h4 fw-bold mb-1">Listado</h2>
+          <p class="text-muted mb-0">Seguimiento de solicitudes y acciones disponibles.</p>
+        </div>
+        {% if not es_admin %}
+          <a class="btn btn-primary" href="{% url 'reservas:crear_reserva' %}">Crear reserva</a>
+        {% endif %}
+      </div>
+
       <div class="table-responsive">
-        <table class="table table-striped align-middle mb-0">
+        <table class="table table-modern table-hover align-middle mb-0">
           <thead>
             <tr>
               <th>Laboratorio</th>
               <th>Fecha</th>
-              <th>Hora inicio</th>
-              <th>Hora fin</th>
+              <th>Horario</th>
               <th>Estado</th>
               <th>Usuario</th>
               <th class="text-end">Acciones</th>
@@ -28,33 +80,53 @@
           <tbody>
             {% for reserva in reservas %}
               <tr>
-                <td>{{ reserva.laboratorio }}</td>
+                <td>
+                  <div class="fw-bold">{{ reserva.laboratorio }}</div>
+                  <div class="small text-muted">Solicitud #{{ reserva.pk }}</div>
+                </td>
                 <td>{{ reserva.fecha }}</td>
-                <td>{{ reserva.hora_inicio }}</td>
-                <td>{{ reserva.hora_fin }}</td>
-                <td>{{ reserva.get_estado_display }}</td>
+                <td>
+                  <span class="fw-semibold">{{ reserva.hora_inicio }}</span>
+                  <span class="text-muted">a</span>
+                  <span class="fw-semibold">{{ reserva.hora_fin }}</span>
+                </td>
+                <td>
+                  {% if reserva.estado == "pendiente" %}
+                    <span class="badge rounded-pill badge-status badge-pendiente">Pendiente</span>
+                  {% elif reserva.estado == "aprobada" %}
+                    <span class="badge rounded-pill badge-status badge-aprobada">Aprobada</span>
+                  {% elif reserva.estado == "rechazada" %}
+                    <span class="badge rounded-pill badge-status badge-rechazada">Rechazada</span>
+                  {% else %}
+                    <span class="badge rounded-pill text-bg-secondary">{{ reserva.get_estado_display }}</span>
+                  {% endif %}
+                </td>
                 <td>{{ reserva.usuario.username }}</td>
                 <td class="text-end">
-                  {% if es_admin and reserva.estado == "pendiente" %}
-                    <form class="d-inline" method="post" action="{% url 'reservas:aprobar_reserva' reserva.pk %}">
-                      {% csrf_token %}
-                      <button class="btn btn-sm btn-success" type="submit">Aprobar</button>
-                    </form>
-                    <form class="d-inline" method="post" action="{% url 'reservas:rechazar_reserva' reserva.pk %}">
-                      {% csrf_token %}
-                      <button class="btn btn-sm btn-danger" type="submit">Rechazar</button>
-                    </form>
-                  {% elif reserva.usuario == user and reserva.estado == "pendiente" %}
-                    <a class="btn btn-sm btn-warning" href="{% url 'reservas:editar_reserva' reserva.pk %}">Editar</a>
-                    <a class="btn btn-sm btn-danger" href="{% url 'reservas:eliminar_reserva' reserva.pk %}">Cancelar</a>
-                  {% else %}
-                    <span class="text-muted">Sin acciones</span>
-                  {% endif %}
+                  <div class="d-inline-flex flex-wrap justify-content-end gap-2">
+                    {% if es_admin and reserva.estado == "pendiente" %}
+                      <form class="d-inline" method="post" action="{% url 'reservas:aprobar_reserva' reserva.pk %}">
+                        {% csrf_token %}
+                        <button class="btn btn-sm btn-success" type="submit">Aprobar</button>
+                      </form>
+                      <form class="d-inline" method="post" action="{% url 'reservas:rechazar_reserva' reserva.pk %}">
+                        {% csrf_token %}
+                        <button class="btn btn-sm btn-outline-danger" type="submit">Rechazar</button>
+                      </form>
+                    {% elif reserva.usuario == user and reserva.estado == "pendiente" %}
+                      <a class="btn btn-sm btn-outline-primary" href="{% url 'reservas:editar_reserva' reserva.pk %}">Editar</a>
+                      <a class="btn btn-sm btn-outline-danger" href="{% url 'reservas:eliminar_reserva' reserva.pk %}">Cancelar</a>
+                    {% else %}
+                      <span class="text-muted small">Sin acciones</span>
+                    {% endif %}
+                  </div>
                 </td>
               </tr>
             {% empty %}
               <tr>
-                <td colspan="7" class="text-center text-muted py-4">No hay reservas registradas.</td>
+                <td colspan="6" class="text-center text-muted py-5">
+                  No hay reservas registradas.
+                </td>
               </tr>
             {% endfor %}
           </tbody>

@@ -1,22 +1,9 @@
-<<<<<<< HEAD
 from django.contrib import messages
-from django.contrib.auth import login
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.models import Group
-from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import redirect
-from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView
-
-from .forms import RegistroUsuarioForm
-=======
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import Group
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -24,7 +11,6 @@ from django.views.generic import CreateView, DeleteView, ListView, TemplateView,
 
 from .forms import RegistroUsuarioForm, ReservaForm
 from .models import Reserva
->>>>>>> 8684703b2debc175363953c4ed2670749b7bd7a4
 
 
 class BootstrapAuthenticationForm(AuthenticationForm):
@@ -46,10 +32,7 @@ class UsuarioLogoutView(LogoutView):
 class UsuarioRegistroView(CreateView):
     form_class = RegistroUsuarioForm
     template_name = 'registration/register.html'
-<<<<<<< HEAD
-=======
     success_url = reverse_lazy('reservas:home')
->>>>>>> 8684703b2debc175363953c4ed2670749b7bd7a4
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -58,28 +41,12 @@ class UsuarioRegistroView(CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-<<<<<<< HEAD
         grupo_docente, _ = Group.objects.get_or_create(name='Docente')
         self.object.groups.add(grupo_docente)
         login(self.request, self.object)
         messages.success(self.request, 'Tu cuenta fue creada y quedaste registrado como docente.')
         return response
 
-    def get_success_url(self):
-        return redirect('reservas:home').url
-
-=======
-        nombre_grupo = form.cleaned_data['rol']
-        grupo, _ = Group.objects.get_or_create(name=nombre_grupo)
-        self.object.groups.add(grupo)
-        if nombre_grupo == 'Administrador':
-            self.object.is_staff = True
-            self.object.save()
-        login(self.request, self.object)
-        messages.success(self.request, 'Tu cuenta fue creada correctamente.')
-        return response
-
->>>>>>> 8684703b2debc175363953c4ed2670749b7bd7a4
 
 def es_admin(user) -> bool:
     return bool(
@@ -122,6 +89,11 @@ class ReservaListView(LoginRequiredMixin, RolBasicoMixin, ListView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['es_admin'] = es_admin(self.request.user)
+        reservas = ctx['reservas']
+        ctx['total_reservas'] = reservas.count()
+        ctx['reservas_pendientes'] = reservas.filter(estado=Reserva.Estados.PENDIENTE).count()
+        ctx['reservas_aprobadas'] = reservas.filter(estado=Reserva.Estados.APROBADA).count()
+        ctx['reservas_rechazadas'] = reservas.filter(estado=Reserva.Estados.RECHAZADA).count()
         return ctx
 
 

@@ -1,12 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-<<<<<<< HEAD
-
-
-class RegistroUsuarioForm(UserCreationForm):
-    email = forms.EmailField(required=False)
-=======
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 
@@ -62,27 +56,13 @@ class ReservaForm(forms.ModelForm):
 
 
 class RegistroUsuarioForm(UserCreationForm):
-    ROL_CHOICES = [
-        ('Docente', 'Docente'),
-        ('Administrador', 'Administrador'),
-    ]
-
     email = forms.EmailField(required=False)
-    rol = forms.ChoiceField(choices=ROL_CHOICES, label='Rol')
-
-    class Meta(UserCreationForm.Meta):
-        model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'rol', 'password1', 'password2']
->>>>>>> 8684703b2debc175363953c4ed2670749b7bd7a4
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs.setdefault('class', 'form-control')
-<<<<<<< HEAD
 
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
-=======
->>>>>>> 8684703b2debc175363953c4ed2670749b7bd7a4

@@ -4,35 +4,54 @@
 
 {% block content %}
   <div class="row justify-content-center">
-    <div class="col-12 col-lg-7">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h1 class="h4 mb-3">{% if object %}Editar reserva{% else %}Crear reserva{% endif %}</h1>
-
-          <form method="post">
-            {% csrf_token %}
-
-            {% if form.non_field_errors %}
-              <div class="alert alert-danger">
-                {{ form.non_field_errors }}
-              </div>
-            {% endif %}
-
-            {% for field in form %}
-              <div class="mb-3">
-                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                {{ field }}
-                {% if field.errors %}
-                  <div class="text-danger small mt-1">{{ field.errors }}</div>
-                {% endif %}
-              </div>
-            {% endfor %}
-
-            <div class="d-flex gap-2">
-              <button class="btn btn-primary" type="submit">Guardar</button>
-              <a class="btn btn-secondary" href="{% url 'reservas:lista_reservas' %}">Cancelar</a>
+    <div class="col-12 col-xl-10">
+      <div class="soft-card card border-0 overflow-hidden">
+        <div class="row g-0">
+          <div class="col-12 col-lg-5 auth-visual p-4 p-lg-5 d-flex flex-column justify-content-between">
+            <div>
+              <span class="badge rounded-pill text-bg-light text-primary mb-3">Solicitud de laboratorio</span>
+              <h1 class="display-6 fw-bold mb-3">{% if object %}Editar reserva{% else %}Crear reserva{% endif %}</h1>
+              <p class="mb-0">
+                Completa la información del espacio, fecha y horario. El sistema conservará las validaciones existentes.
+              </p>
             </div>
-          </form>
+            <div class="mt-5 p-3 rounded-4 bg-white bg-opacity-25">
+              <p class="small mb-1">Estado inicial</p>
+              <span class="badge rounded-pill badge-status badge-pendiente">Pendiente</span>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-7 p-4 p-lg-5 bg-white">
+            <form method="post" novalidate>
+              {% csrf_token %}
+
+              {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                  {{ form.non_field_errors }}
+                </div>
+              {% endif %}
+
+              <div class="row g-3">
+                {% for field in form %}
+                  <div class="{% if field.name == 'motivo' or field.name == 'laboratorio' %}col-12{% else %}col-12 col-md-6{% endif %}">
+                    <label class="form-label fw-semibold" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                      <div class="form-text">{{ field.help_text }}</div>
+                    {% endif %}
+                    {% if field.errors %}
+                      <div class="text-danger small mt-1">{{ field.errors }}</div>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+
+              <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+                <button class="btn btn-primary" type="submit">Guardar reserva</button>
+                <a class="btn btn-outline-secondary" href="{% url 'reservas:lista_reservas' %}">Volver al listado</a>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
