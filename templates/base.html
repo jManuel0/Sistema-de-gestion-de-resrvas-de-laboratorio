@@ -32,6 +32,11 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'reservas:home' %}">Inicio</a>
             </li>
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'reservas:lista_reservas' %}">Reservas</a>
+              </li>
+            {% endif %}
           </ul>
 
           <div class="d-flex gap-2">

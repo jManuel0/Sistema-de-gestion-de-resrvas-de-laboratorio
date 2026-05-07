@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Cancelar reserva{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h1 class="h4 mb-3">Cancelar reserva</h1>
+          <p>
+            ¿Seguro que deseas cancelar la reserva del laboratorio
+            <strong>{{ object.laboratorio }}</strong> para el día
+            <strong>{{ object.fecha }}</strong>?
+          </p>
+
+          <form method="post">
+            {% csrf_token %}
+            <div class="d-flex gap-2">
+              <button class="btn btn-danger" type="submit">Cancelar reserva</button>
+              <a class="btn btn-secondary" href="{% url 'reservas:lista_reservas' %}">Volver</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
