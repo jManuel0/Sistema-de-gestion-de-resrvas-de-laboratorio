@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}{% if object %}Editar reserva{% else %}Nueva reserva{% endif %}{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h1 class="h4 mb-0">{% if object %}Editar reserva{% else %}Nueva reserva{% endif %}</h1>
+        <a class="btn btn-outline-secondary btn-sm" href="{% url 'reservas:lista' %}">Volver</a>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+              <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <label class="form-label">Laboratorio</label>
+                {{ form.laboratorio }}
+                <div class="text-danger small">{{ form.laboratorio.errors }}</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label">Fecha</label>
+                {{ form.fecha }}
+                <div class="text-danger small">{{ form.fecha.errors }}</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label">Hora inicio</label>
+                {{ form.hora_inicio }}
+                <div class="text-danger small">{{ form.hora_inicio.errors }}</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label">Hora fin</label>
+                {{ form.hora_fin }}
+                <div class="text-danger small">{{ form.hora_fin.errors }}</div>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Motivo</label>
+                {{ form.motivo }}
+                <div class="text-danger small">{{ form.motivo.errors }}</div>
+              </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-3">
+              <button class="btn btn-primary" type="submit">Guardar</button>
+              <a class="btn btn-outline-secondary" href="{% url 'reservas:lista' %}">Cancelar</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
