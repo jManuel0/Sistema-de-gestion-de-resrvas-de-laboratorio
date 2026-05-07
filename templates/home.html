@@ -9,7 +9,13 @@
           <h1 class="h4 mb-2">Bienvenido</h1>
           <p class="text-muted mb-3">
             Has iniciado sesión correctamente.
-            {% if es_admin %}Rol: <b>Administrador</b>.{% elif es_docente %}Rol: <b>Docente</b>.{% endif %}
+            {% if es_admin %}
+              Rol: <b>Administrador</b>.
+            {% elif es_docente %}
+              Rol: <b>Docente</b>.
+            {% elif es_estudiante %}
+              Rol: <b>Estudiante</b>.
+            {% endif %}
           </p>
           <a class="btn btn-primary" href="{% url 'reservas:lista_reservas' %}">Ver reservas</a>
         </div>

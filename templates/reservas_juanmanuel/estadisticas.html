@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Estadísticas{% endblock %}
+
+{% block content %}
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h4 mb-0">Estadísticas de reservas</h1>
+    <a class="btn btn-secondary" href="{% url 'reservas:lista_reservas' %}">Volver</a>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="h6 text-muted">Total de reservas</h2>
+          <p class="display-6 mb-0">{{ total_reservas }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="h6 text-muted">Reservas por estado</h2>
+          <ul class="list-group list-group-flush">
+            {% for item in reservas_por_estado %}
+              <li class="list-group-item d-flex justify-content-between px-0">
+                <span>{{ item.estado|title }}</span>
+                <strong>{{ item.total }}</strong>
+              </li>
+            {% empty %}
+              <li class="list-group-item px-0 text-muted">Sin datos</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="h6 text-muted">Reservas por laboratorio</h2>
+          <ul class="list-group list-group-flush">
+            {% for item in reservas_por_laboratorio %}
+              <li class="list-group-item d-flex justify-content-between px-0">
+                <span>{{ item.laboratorio }}</span>
+                <strong>{{ item.total }}</strong>
+              </li>
+            {% empty %}
+              <li class="list-group-item px-0 text-muted">Sin datos</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

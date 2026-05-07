@@ -59,6 +59,7 @@ class RegistroUsuarioForm(UserCreationForm):
     ROL_CHOICES = [
         ('Docente', 'Docente'),
         ('Administrador', 'Administrador'),
+        ('Estudiante', 'Estudiante'),
     ]
 
     email = forms.EmailField(required=False)
