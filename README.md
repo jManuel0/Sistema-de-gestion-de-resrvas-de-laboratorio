@@ -33,6 +33,21 @@ python manage.py runserver
 
 Abre `http://127.0.0.1:8000/`.
 
+### Usuarios de prueba
+
+Estas credenciales funcionan usando el archivo `db.sqlite3` incluido en el proyecto.  
+Si se crea una base nueva desde cero, estos usuarios no existirán hasta volver a registrarlos.
+
+- `Administrador`
+  - Usuario: `carlos2`
+  - Clave: `1234Ct6789`
+- `Docente`
+  - Usuario: `Juan_0729`
+  - Clave: `Juan3173145521`
+- `Estudiante`
+  - Usuario: `felipe07`
+  - Clave: `miguelfelipe1`
+
 ### Roles (Docente / Administrador)
 
 - Se crean automáticamente los grupos **`Docente`** y **`Administrador`** al ejecutar `migrate` (signal `post_migrate`).
