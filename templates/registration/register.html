@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Registro{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h1 class="h4 mb-3">Crear cuenta</h1>
+
+          <form method="post">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+              <div class="alert alert-danger" role="alert">
+                {{ form.non_field_errors }}
+              </div>
+            {% endif %}
+
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label" for="{{ form.username.id_for_label }}">Usuario</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                  <div class="text-danger small mt-1">{{ form.username.errors }}</div>
+                {% endif %}
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="{{ form.first_name.id_for_label }}">Nombre</label>
+                {{ form.first_name }}
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="{{ form.last_name.id_for_label }}">Apellido</label>
+                {{ form.last_name }}
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="{{ form.email.id_for_label }}">Correo</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                  <div class="text-danger small mt-1">{{ form.email.errors }}</div>
+                {% endif %}
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="{{ form.rol.id_for_label }}">Rol</label>
+                {{ form.rol }}
+                {% if form.rol.errors %}
+                  <div class="text-danger small mt-1">{{ form.rol.errors }}</div>
+                {% endif %}
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="{{ form.password1.id_for_label }}">Contraseña</label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                  <div class="text-danger small mt-1">{{ form.password1.errors }}</div>
+                {% endif %}
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="{{ form.password2.id_for_label }}">Confirmar contraseña</label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                  <div class="text-danger small mt-1">{{ form.password2.errors }}</div>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-4">
+              <button class="btn btn-primary" type="submit">Crear cuenta</button>
+              <a class="btn btn-outline-secondary" href="{% url 'reservas:login' %}">Volver a login</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
