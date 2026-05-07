@@ -10,66 +10,267 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <style>
+      :root {
+        --lab-primary: #08a9b8;
+        --lab-primary-dark: #087b89;
+        --lab-ink: #17313b;
+        --lab-muted: #6f7f87;
+        --lab-soft: #eefbfc;
+        --lab-border: #d9edf0;
+      }
+
+      body {
+        min-height: 100vh;
+        color: var(--lab-ink);
+        background:
+          radial-gradient(circle at top left, rgba(8, 169, 184, 0.16), transparent 28rem),
+          linear-gradient(180deg, #f8feff 0%, #f5f7fb 48%, #eef3f6 100%);
+      }
+
+      .app-shell {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .navbar-lab {
+        background: rgba(255, 255, 255, 0.92);
+        border-bottom: 1px solid var(--lab-border);
+        backdrop-filter: blur(14px);
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--lab-primary), #1ed0c6);
+        box-shadow: 0 12px 26px rgba(8, 169, 184, 0.24);
+      }
+
+      .navbar .nav-link {
+        color: var(--lab-muted);
+        font-weight: 600;
+      }
+
+      .navbar .nav-link:hover,
+      .navbar .nav-link:focus {
+        color: var(--lab-primary-dark);
+      }
+
+      .btn-primary {
+        --bs-btn-bg: var(--lab-primary);
+        --bs-btn-border-color: var(--lab-primary);
+        --bs-btn-hover-bg: var(--lab-primary-dark);
+        --bs-btn-hover-border-color: var(--lab-primary-dark);
+        --bs-btn-active-bg: var(--lab-primary-dark);
+        --bs-btn-active-border-color: var(--lab-primary-dark);
+        box-shadow: 0 10px 22px rgba(8, 169, 184, 0.2);
+      }
+
+      .btn,
+      .form-control,
+      .form-select,
+      .card,
+      .alert {
+        border-radius: 0.75rem;
+      }
+
+      .btn {
+        font-weight: 700;
+      }
+
+      .form-control,
+      .form-select {
+        border-color: var(--lab-border);
+        padding: 0.72rem 0.9rem;
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--lab-primary);
+        box-shadow: 0 0 0 0.22rem rgba(8, 169, 184, 0.16);
+      }
+
+      .page-hero {
+        overflow: hidden;
+        border: 1px solid var(--lab-border);
+        border-radius: 1.5rem;
+        background: linear-gradient(135deg, #0bb0bd 0%, #10c1c8 54%, #8de4df 100%);
+        color: #fff;
+        box-shadow: 0 24px 48px rgba(8, 123, 137, 0.16);
+      }
+
+      .page-hero-visual {
+        min-height: 12rem;
+        background:
+          radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.46) 0 3rem, transparent 3.1rem),
+          radial-gradient(circle at 66% 72%, rgba(255, 255, 255, 0.22) 0 5rem, transparent 5.1rem);
+      }
+
+      .hero-device {
+        width: min(18rem, 78%);
+        border-radius: 1.1rem;
+        background: rgba(255, 255, 255, 0.92);
+        color: var(--lab-ink);
+        box-shadow: 0 22px 44px rgba(0, 0, 0, 0.16);
+      }
+
+      .soft-card {
+        border: 1px solid var(--lab-border);
+        box-shadow: 0 18px 38px rgba(23, 49, 59, 0.08);
+      }
+
+      .stat-card {
+        border: 1px solid var(--lab-border);
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .table-modern {
+        --bs-table-striped-bg: #f7fbfc;
+      }
+
+      .table-modern thead th {
+        color: var(--lab-muted);
+        border-bottom: 1px solid var(--lab-border);
+        font-size: 0.78rem;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .table-modern tbody td {
+        border-color: #edf4f6;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+
+      .badge-status {
+        border: 1px solid transparent;
+        font-weight: 700;
+        padding: 0.48rem 0.7rem;
+      }
+
+      .badge-pendiente {
+        color: #936200;
+        background: #fff3cd;
+        border-color: #ffe29a;
+      }
+
+      .badge-aprobada {
+        color: #087443;
+        background: #dff7eb;
+        border-color: #bcebd2;
+      }
+
+      .badge-rechazada {
+        color: #a33131;
+        background: #ffe6e6;
+        border-color: #ffc9c9;
+      }
+
+      .auth-panel {
+        max-width: 960px;
+        border: 1px solid var(--lab-border);
+        border-radius: 1.5rem;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 22px 48px rgba(23, 49, 59, 0.11);
+      }
+
+      .auth-visual {
+        background: linear-gradient(145deg, #09aab7, #7ddbd7);
+        color: #fff;
+      }
+
+      .main-content {
+        flex: 1;
+      }
+
+      .footer-lab {
+        color: var(--lab-muted);
+        border-top: 1px solid var(--lab-border);
+        background: rgba(255, 255, 255, 0.72);
+      }
+    </style>
   </head>
-  <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="{% url 'reservas:home' %}">Reservas</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#nav"
-          aria-controls="nav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
+  <body>
+    <div class="app-shell">
+      <nav class="navbar navbar-expand-lg navbar-light navbar-lab sticky-top">
+        <div class="container py-2">
+          <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="{% url 'reservas:home' %}">
+            <span class="brand-mark">R</span>
+            <span>LabReservas</span>
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#nav"
+            aria-controls="nav"
+            aria-expanded="false"
+            aria-label="Abrir navegación"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-        <div class="collapse navbar-collapse" id="nav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'reservas:home' %}">Inicio</a>
-            </li>
-            {% if user.is_authenticated %}
+          <div class="collapse navbar-collapse" id="nav">
+            <ul class="navbar-nav mx-lg-auto mb-3 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'reservas:lista_reservas' %}">Reservas</a>
+                <a class="nav-link px-lg-3" href="{% url 'reservas:home' %}">Inicio</a>
               </li>
-            {% endif %}
-          </ul>
+              {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link px-lg-3" href="{% url 'reservas:lista_reservas' %}">Reservas</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link px-lg-3" href="{% url 'reservas:estadisticas' %}">Estadísticas</a>
+                </li>
+              {% endif %}
+            </ul>
 
-          <div class="d-flex gap-2">
-            {% if user.is_authenticated %}
-              <span class="navbar-text text-white-50">
-                {{ user.get_username }}
-              </span>
-              <form action="{% url 'reservas:logout' %}" method="post" class="m-0">
-                {% csrf_token %}
-                <button class="btn btn-outline-light btn-sm" type="submit">Salir</button>
-              </form>
-            {% else %}
-              <a class="btn btn-outline-light btn-sm" href="{% url 'reservas:login' %}">Entrar</a>
-              <a class="btn btn-primary btn-sm" href="{% url 'reservas:registro' %}">Registrarse</a>
-            {% endif %}
+            <div class="d-flex flex-column flex-lg-row gap-2 align-items-lg-center">
+              {% if user.is_authenticated %}
+                <span class="small text-muted">Hola, <strong class="text-dark">{{ user.get_username }}</strong></span>
+                <form action="{% url 'reservas:logout' %}" method="post" class="m-0">
+                  {% csrf_token %}
+                  <button class="btn btn-outline-secondary btn-sm" type="submit">Salir</button>
+                </form>
+              {% else %}
+                <a class="btn btn-outline-secondary btn-sm" href="{% url 'reservas:login' %}">Entrar</a>
+                <a class="btn btn-primary btn-sm" href="{% url 'reservas:registro' %}">Crear cuenta</a>
+              {% endif %}
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
 
-    <main class="container py-4">
-      {% if messages %}
-        <div class="mb-3">
-          {% for message in messages %}
-            <div class="alert alert-{{ message.tags|default:'info' }} mb-2" role="alert">
-              {{ message }}
-            </div>
-          {% endfor %}
+      <main class="main-content container py-4 py-lg-5">
+        {% if messages %}
+          <div class="mb-4">
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show shadow-sm border-0" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+      </main>
+
+      <footer class="footer-lab py-3">
+        <div class="container d-flex flex-column flex-md-row justify-content-between gap-2 small">
+          <span>Sistema de gestión de reservas de laboratorio</span>
+          <span>Interfaz clara para docentes, administradores y estudiantes</span>
         </div>
-      {% endif %}
-
-      {% block content %}{% endblock %}
-    </main>
+      </footer>
+    </div>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -78,4 +279,3 @@
     ></script>
   </body>
 </html>
-

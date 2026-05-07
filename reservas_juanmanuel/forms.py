@@ -57,16 +57,17 @@ class RegistroUsuarioForm(UserCreationForm):
     ROL_CHOICES = [
         ('Docente', 'Docente'),
         ('Administrador', 'Administrador'),
+        ('Estudiante', 'Estudiante'),
     ]
 
     email = forms.EmailField(required=False)
     rol = forms.ChoiceField(choices=ROL_CHOICES, label='Rol')
 
-    class Meta(UserCreationForm.Meta):
-        model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'rol', 'password1', 'password2']
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs.setdefault('class', 'form-control')
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'rol', 'password1', 'password2']

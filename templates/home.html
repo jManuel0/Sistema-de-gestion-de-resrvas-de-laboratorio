@@ -2,17 +2,47 @@
 {% block title %}Inicio{% endblock %}
 
 {% block content %}
-  <div class="row justify-content-center">
-    <div class="col-12 col-lg-8">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h1 class="h4 mb-2">Bienvenido</h1>
-          <p class="text-muted mb-3">
-            Has iniciado sesión correctamente.
-            {% if es_admin %}Rol: <b>Administrador</b>.{% elif es_docente %}Rol: <b>Docente</b>.{% endif %}
-          </p>
-          <a class="btn btn-primary" href="{% url 'reservas:lista_reservas' %}">Ver reservas</a>
+  <section class="page-hero mb-4">
+    <div class="row g-0 align-items-center">
+      <div class="col-12 col-lg-7 p-4 p-lg-5">
+        <span class="badge rounded-pill text-bg-light text-primary mb-3">
+          {% if es_admin %}Administrador{% elif es_docente %}Docente{% elif es_estudiante %}Estudiante{% else %}Usuario{% endif %}
+        </span>
+        <h1 class="display-6 fw-bold mb-3">Bienvenido, {{ user.get_username }}</h1>
+        <p class="lead mb-0">
+          Gestiona y consulta reservas de laboratorio desde un panel claro, moderno y preparado para cualquier pantalla.
+        </p>
+      </div>
+      <div class="col-12 col-lg-5 page-hero-visual d-flex align-items-center justify-content-center p-4">
+        <div class="hero-device p-3">
+          <div class="d-flex justify-content-between mb-3">
+            <span class="fw-bold">Panel activo</span>
+            <span class="badge rounded-pill badge-status badge-aprobada">En línea</span>
+          </div>
+          <div class="small text-muted mb-3">Acceso a reservas, estados, estadísticas y acciones según tu rol.</div>
+          <a class="btn btn-primary btn-sm w-100" href="{% url 'reservas:lista_reservas' %}">Ver reservas</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="row g-3">
+    <div class="col-12 col-md-4">
+      <div class="stat-card rounded-4 p-4 h-100">
+        <p class="text-muted small mb-1">Rol actual</p>
+        <p class="h5 fw-bold mb-0">{% if es_admin %}Administrador{% elif es_docente %}Docente{% elif es_estudiante %}Estudiante{% else %}Usuario{% endif %}</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="stat-card rounded-4 p-4 h-100">
+        <p class="text-muted small mb-1">Reservas</p>
+        <p class="h5 fw-bold mb-0">Consulta y gestión</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="stat-card rounded-4 p-4 h-100">
+        <p class="text-muted small mb-1">Reportes</p>
+        <p class="h5 fw-bold mb-0">Estadísticas y CSV</p>
       </div>
     </div>
   </div>

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Estadísticas{% endblock %}
+
+{% block content %}
+  <section class="page-hero mb-4">
+    <div class="row g-0 align-items-center">
+      <div class="col-12 col-lg-8 p-4 p-lg-5">
+        <span class="badge rounded-pill text-bg-light text-primary mb-3">Reportes</span>
+        <h1 class="display-6 fw-bold mb-3">Estadísticas de reservas</h1>
+        <p class="lead mb-0">
+          Revisa el comportamiento general de reservas por estado y por laboratorio.
+        </p>
+      </div>
+      <div class="col-12 col-lg-4 page-hero-visual d-flex align-items-center justify-content-center p-4">
+        <div class="hero-device p-3 text-center">
+          <p class="small text-muted mb-1">Total de reservas</p>
+          <p class="display-6 fw-bold mb-0">{{ total_reservas }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="d-flex justify-content-end mb-3">
+    <a class="btn btn-outline-secondary" href="{% url 'reservas:lista_reservas' %}">Volver al listado</a>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-12 col-lg-4">
+      <div class="stat-card rounded-4 p-4 h-100">
+        <p class="text-muted small mb-1">Total de reservas</p>
+        <p class="display-6 fw-bold mb-0">{{ total_reservas }}</p>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+      <div class="soft-card card border-0 h-100">
+        <div class="card-body p-4">
+          <h2 class="h5 fw-bold mb-3">Reservas por estado</h2>
+          <div class="list-group list-group-flush">
+            {% for item in reservas_por_estado %}
+              <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                <span>{{ item.estado|title }}</span>
+                <strong>{{ item.total }}</strong>
+              </div>
+            {% empty %}
+              <div class="list-group-item px-0 text-muted">Sin datos</div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+      <div class="soft-card card border-0 h-100">
+        <div class="card-body p-4">
+          <h2 class="h5 fw-bold mb-3">Reservas por laboratorio</h2>
+          <div class="list-group list-group-flush">
+            {% for item in reservas_por_laboratorio %}
+              <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                <span>{{ item.laboratorio }}</span>
+                <strong>{{ item.total }}</strong>
+              </div>
+            {% empty %}
+              <div class="list-group-item px-0 text-muted">Sin datos</div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
