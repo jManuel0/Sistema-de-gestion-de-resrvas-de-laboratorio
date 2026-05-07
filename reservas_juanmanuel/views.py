@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.db.models import Count
 from django.http import HttpResponse
@@ -20,8 +20,18 @@ from .models import Reserva
 class BootstrapAuthenticationForm(AuthenticationForm):
     def __init__(self, request=None, *args, **kwargs):
         super().__init__(request, *args, **kwargs)
+        self.fields['username'].label = 'Usuario o correo'
         self.fields['username'].widget.attrs.setdefault('class', 'form-control')
+        self.fields['username'].widget.attrs.setdefault('placeholder', 'Usuario o correo')
         self.fields['password'].widget.attrs.setdefault('class', 'form-control')
+
+    def clean(self):
+        username_or_email = self.cleaned_data.get('username')
+        if username_or_email and '@' in username_or_email:
+            user = User.objects.filter(email__iexact=username_or_email).first()
+            if user:
+                self.cleaned_data['username'] = user.get_username()
+        return super().clean()
 
 
 class UsuarioLoginView(LoginView):

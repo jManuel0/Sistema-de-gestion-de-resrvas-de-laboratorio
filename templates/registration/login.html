@@ -9,7 +9,7 @@
           <span class="badge rounded-pill text-bg-light text-primary mb-3">Acceso seguro</span>
           <h1 class="display-6 fw-bold mb-3">Gestiona tus reservas sin perder tiempo.</h1>
           <p class="mb-0">
-            Ingresa para consultar solicitudes, crear reservas y dar seguimiento a los estados del laboratorio.
+            Ingresa con tu usuario o correo para consultar solicitudes, crear reservas y dar seguimiento a los estados.
           </p>
         </div>
         <div class="mt-5 hero-device p-3">
@@ -23,18 +23,18 @@
 
       <div class="col-12 col-lg-6 p-4 p-lg-5">
         <h2 class="h3 fw-bold mb-2">Iniciar sesión</h2>
-        <p class="text-muted mb-4">Usa tus credenciales institucionales.</p>
+          <p class="text-muted mb-4">Usa tu usuario o correo y la contraseña registrada.</p>
 
         {% if form.errors %}
           <div class="alert alert-danger" role="alert">
-            Usuario o contraseña incorrectos.
+            Usuario, correo o contraseña incorrectos.
           </div>
         {% endif %}
 
         <form method="post" action="{% url 'reservas:login' %}">
           {% csrf_token %}
           <div class="mb-3">
-            <label class="form-label fw-semibold" for="{{ form.username.id_for_label }}">Usuario</label>
+            <label class="form-label fw-semibold" for="{{ form.username.id_for_label }}">Usuario o correo</label>
             {{ form.username }}
           </div>
           <div class="mb-3">
