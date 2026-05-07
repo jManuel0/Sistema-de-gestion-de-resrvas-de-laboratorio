@@ -1,8 +1,4 @@
 {% extends "base.html" %}
-<<<<<<< HEAD
-=======
-
->>>>>>> 8684703b2debc175363953c4ed2670749b7bd7a4
 {% block title %}Registro{% endblock %}
 
 {% block content %}
@@ -11,12 +7,6 @@
       <div class="card shadow-sm">
         <div class="card-body">
           <h1 class="h4 mb-3">Crear cuenta</h1>
-<<<<<<< HEAD
-          <p class="text-muted">
-            El registro web crea usuarios con rol de docente. Las cuentas de administrador se gestionan internamente.
-          </p>
-=======
->>>>>>> 8684703b2debc175363953c4ed2670749b7bd7a4
 
           <form method="post">
             {% csrf_token %}
@@ -31,13 +21,9 @@
               <div class="col-12">
                 <label class="form-label" for="{{ form.username.id_for_label }}">Usuario</label>
                 {{ form.username }}
-<<<<<<< HEAD
-                {% if form.username.errors %}<div class="text-danger small mt-1">{{ form.username.errors }}</div>{% endif %}
-=======
                 {% if form.username.errors %}
                   <div class="text-danger small mt-1">{{ form.username.errors }}</div>
                 {% endif %}
->>>>>>> 8684703b2debc175363953c4ed2670749b7bd7a4
               </div>
               <div class="col-12 col-md-6">
                 <label class="form-label" for="{{ form.first_name.id_for_label }}">Nombre</label>
@@ -50,9 +36,6 @@
               <div class="col-12">
                 <label class="form-label" for="{{ form.email.id_for_label }}">Correo</label>
                 {{ form.email }}
-<<<<<<< HEAD
-                {% if form.email.errors %}<div class="text-danger small mt-1">{{ form.email.errors }}</div>{% endif %}
-=======
                 {% if form.email.errors %}
                   <div class="text-danger small mt-1">{{ form.email.errors }}</div>
                 {% endif %}
@@ -63,29 +46,20 @@
                 {% if form.rol.errors %}
                   <div class="text-danger small mt-1">{{ form.rol.errors }}</div>
                 {% endif %}
->>>>>>> 8684703b2debc175363953c4ed2670749b7bd7a4
               </div>
               <div class="col-12 col-md-6">
                 <label class="form-label" for="{{ form.password1.id_for_label }}">Contraseña</label>
                 {{ form.password1 }}
-<<<<<<< HEAD
-                {% if form.password1.errors %}<div class="text-danger small mt-1">{{ form.password1.errors }}</div>{% endif %}
-=======
                 {% if form.password1.errors %}
                   <div class="text-danger small mt-1">{{ form.password1.errors }}</div>
                 {% endif %}
->>>>>>> 8684703b2debc175363953c4ed2670749b7bd7a4
               </div>
               <div class="col-12 col-md-6">
                 <label class="form-label" for="{{ form.password2.id_for_label }}">Confirmar contraseña</label>
                 {{ form.password2 }}
-<<<<<<< HEAD
-                {% if form.password2.errors %}<div class="text-danger small mt-1">{{ form.password2.errors }}</div>{% endif %}
-=======
                 {% if form.password2.errors %}
                   <div class="text-danger small mt-1">{{ form.password2.errors }}</div>
                 {% endif %}
->>>>>>> 8684703b2debc175363953c4ed2670749b7bd7a4
               </div>
             </div>
 

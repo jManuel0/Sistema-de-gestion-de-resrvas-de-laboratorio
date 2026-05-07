@@ -1,12 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-<<<<<<< HEAD
-
-
-class RegistroUsuarioForm(UserCreationForm):
-    email = forms.EmailField(required=False)
-=======
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 
@@ -46,9 +40,7 @@ class ReservaForm(forms.ModelForm):
             reservas_cruzadas = Reserva.objects.filter(
                 laboratorio__iexact=laboratorio.strip(),
                 fecha=fecha,
-            ).filter(
-                Q(hora_inicio__lt=hora_fin) & Q(hora_fin__gt=hora_inicio)
-            )
+            ).filter(Q(hora_inicio__lt=hora_fin) & Q(hora_fin__gt=hora_inicio))
 
             if self.instance.pk:
                 reservas_cruzadas = reservas_cruzadas.exclude(pk=self.instance.pk)
@@ -73,16 +65,8 @@ class RegistroUsuarioForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'rol', 'password1', 'password2']
->>>>>>> 8684703b2debc175363953c4ed2670749b7bd7a4
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs.setdefault('class', 'form-control')
-<<<<<<< HEAD
-
-    class Meta(UserCreationForm.Meta):
-        model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
-=======
->>>>>>> 8684703b2debc175363953c4ed2670749b7bd7a4
