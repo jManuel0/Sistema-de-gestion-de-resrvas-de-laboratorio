@@ -14,6 +14,8 @@ urlpatterns = [
     path('reservas/<int:pk>/eliminar/', views.ReservaDeleteView.as_view(), name='eliminar_reserva'),
     path('reservas/<int:pk>/aprobar/', views.ReservaAprobarView.as_view(), name='aprobar_reserva'),
     path('reservas/<int:pk>/rechazar/', views.ReservaRechazarView.as_view(), name='rechazar_reserva'),
+    path('reservas/exportar/csv/', views.ReservaCSVExportView.as_view(), name='exportar_reservas_csv'),
+    path('estadisticas/', views.EstadisticasView.as_view(), name='estadisticas'),
     path('', views.HomeView.as_view(), name='home'),
 ]
 

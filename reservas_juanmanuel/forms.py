@@ -40,9 +40,7 @@ class ReservaForm(forms.ModelForm):
             reservas_cruzadas = Reserva.objects.filter(
                 laboratorio__iexact=laboratorio.strip(),
                 fecha=fecha,
-            ).filter(
-                Q(hora_inicio__lt=hora_fin) & Q(hora_fin__gt=hora_inicio)
-            )
+            ).filter(Q(hora_inicio__lt=hora_fin) & Q(hora_fin__gt=hora_inicio))
 
             if self.instance.pk:
                 reservas_cruzadas = reservas_cruzadas.exclude(pk=self.instance.pk)
@@ -56,7 +54,14 @@ class ReservaForm(forms.ModelForm):
 
 
 class RegistroUsuarioForm(UserCreationForm):
+    ROL_CHOICES = [
+        ('Docente', 'Docente'),
+        ('Administrador', 'Administrador'),
+        ('Estudiante', 'Estudiante'),
+    ]
+
     email = forms.EmailField(required=False)
+    rol = forms.ChoiceField(choices=ROL_CHOICES, label='Rol')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -65,4 +70,4 @@ class RegistroUsuarioForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+        fields = ['username', 'first_name', 'last_name', 'email', 'rol', 'password1', 'password2']

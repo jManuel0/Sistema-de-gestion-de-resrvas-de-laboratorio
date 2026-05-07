@@ -16,7 +16,6 @@
         --lab-primary-dark: #087b89;
         --lab-ink: #17313b;
         --lab-muted: #6f7f87;
-        --lab-surface: #ffffff;
         --lab-soft: #eefbfc;
         --lab-border: #d9edf0;
       }
@@ -228,6 +227,9 @@
                 <li class="nav-item">
                   <a class="nav-link px-lg-3" href="{% url 'reservas:lista_reservas' %}">Reservas</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link px-lg-3" href="{% url 'reservas:estadisticas' %}">Estadísticas</a>
+                </li>
               {% endif %}
             </ul>
 
@@ -265,7 +267,7 @@
       <footer class="footer-lab py-3">
         <div class="container d-flex flex-column flex-md-row justify-content-between gap-2 small">
           <span>Sistema de gestión de reservas de laboratorio</span>
-          <span>Interfaz clara para docentes y administradores</span>
+          <span>Interfaz clara para docentes, administradores y estudiantes</span>
         </div>
       </footer>
     </div>

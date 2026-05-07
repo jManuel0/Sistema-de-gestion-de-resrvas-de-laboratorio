@@ -7,9 +7,9 @@
     <div class="row g-0">
       <div class="col-12 col-lg-5 auth-visual p-4 p-lg-5">
         <span class="badge rounded-pill text-bg-light text-primary mb-3">Nuevo usuario</span>
-        <h1 class="display-6 fw-bold mb-3">Crea tu cuenta docente.</h1>
+        <h1 class="display-6 fw-bold mb-3">Crea tu cuenta.</h1>
         <p class="mb-0">
-          El registro web crea usuarios con rol de docente. Las cuentas de administrador se gestionan internamente.
+          Selecciona tu rol para acceder a las opciones disponibles del sistema de reservas.
         </p>
       </div>
 
@@ -49,15 +49,13 @@
                 <div class="text-danger small mt-1">{{ form.email.errors }}</div>
               {% endif %}
             </div>
-            {% if form.rol %}
-              <div class="col-12">
-                <label class="form-label fw-semibold" for="{{ form.rol.id_for_label }}">Rol</label>
-                {{ form.rol }}
-                {% if form.rol.errors %}
-                  <div class="text-danger small mt-1">{{ form.rol.errors }}</div>
-                {% endif %}
-              </div>
-            {% endif %}
+            <div class="col-12">
+              <label class="form-label fw-semibold" for="{{ form.rol.id_for_label }}">Rol</label>
+              {{ form.rol }}
+              {% if form.rol.errors %}
+                <div class="text-danger small mt-1">{{ form.rol.errors }}</div>
+              {% endif %}
+            </div>
             <div class="col-12 col-md-6">
               <label class="form-label fw-semibold" for="{{ form.password1.id_for_label }}">Contraseña</label>
               {{ form.password1 }}

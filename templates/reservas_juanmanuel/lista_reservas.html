@@ -7,11 +7,11 @@
     <div class="row g-0 align-items-center">
       <div class="col-12 col-lg-7 p-4 p-lg-5">
         <span class="badge rounded-pill text-bg-light text-primary mb-3">
-          {% if es_admin %}Panel administrativo{% else %}Panel docente{% endif %}
+          {% if es_admin %}Panel administrativo{% elif es_docente %}Panel docente{% elif es_estudiante %}Consulta estudiante{% else %}Panel de reservas{% endif %}
         </span>
         <h1 class="display-6 fw-bold mb-3">Reservas de laboratorio</h1>
         <p class="lead mb-0">
-          Consulta horarios, revisa estados y gestiona solicitudes desde una vista clara y organizada.
+          Consulta horarios, filtra solicitudes, exporta reportes y revisa estados desde una vista organizada.
         </p>
       </div>
       <div class="col-12 col-lg-5 page-hero-visual d-flex align-items-center justify-content-center p-4">
@@ -55,15 +55,38 @@
 
   <div class="soft-card card border-0">
     <div class="card-body p-0">
-      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 p-3 p-lg-4 border-bottom">
+      <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 p-3 p-lg-4 border-bottom">
         <div>
           <h2 class="h4 fw-bold mb-1">Listado</h2>
           <p class="text-muted mb-0">Seguimiento de solicitudes y acciones disponibles.</p>
         </div>
-        {% if not es_admin %}
-          <a class="btn btn-primary" href="{% url 'reservas:crear_reserva' %}">Crear reserva</a>
-        {% endif %}
+        <div class="d-flex flex-column flex-sm-row gap-2">
+          {% if es_docente %}
+            <a class="btn btn-primary" href="{% url 'reservas:crear_reserva' %}">Crear reserva</a>
+          {% endif %}
+          <a class="btn btn-outline-secondary" href="{% url 'reservas:estadisticas' %}">Ver estadísticas</a>
+        </div>
       </div>
+
+      <form class="row g-3 align-items-end p-3 p-lg-4 border-bottom bg-light" method="get">
+        <div class="col-12 col-md-4">
+          <label class="form-label fw-semibold" for="laboratorio">Laboratorio</label>
+          <input class="form-control" id="laboratorio" name="laboratorio" value="{{ filtro_laboratorio }}" placeholder="Ej. Laboratorio 1">
+        </div>
+        <div class="col-12 col-md-3">
+          <label class="form-label fw-semibold" for="fecha">Fecha</label>
+          <input class="form-control" id="fecha" name="fecha" type="date" value="{{ filtro_fecha }}">
+        </div>
+        <div class="col-12 col-md-auto">
+          <button class="btn btn-secondary w-100" type="submit">Filtrar</button>
+        </div>
+        <div class="col-12 col-md-auto">
+          <a class="btn btn-outline-secondary w-100" href="{% url 'reservas:lista_reservas' %}">Limpiar</a>
+        </div>
+        <div class="col-12 col-md-auto ms-md-auto">
+          <a class="btn btn-success w-100" href="{% url 'reservas:exportar_reservas_csv' %}?laboratorio={{ filtro_laboratorio }}&fecha={{ filtro_fecha }}">Exportar CSV</a>
+        </div>
+      </form>
 
       <div class="table-responsive">
         <table class="table table-modern table-hover align-middle mb-0">
@@ -125,7 +148,7 @@
             {% empty %}
               <tr>
                 <td colspan="6" class="text-center text-muted py-5">
-                  No hay reservas registradas.
+                  No hay reservas registradas con los filtros actuales.
                 </td>
               </tr>
             {% endfor %}
