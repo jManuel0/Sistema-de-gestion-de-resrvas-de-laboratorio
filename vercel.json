@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "python manage.py migrate && python manage.py collectstatic --noinput",
+  "functions": {
+    "reservas_laboratorio_juanmanuel/wsgi.py": {
+      "excludeFiles": "{.git/**,.venv/**,db.sqlite3,**/__pycache__/**,**/*.pyc}"
+    }
+  }
+}

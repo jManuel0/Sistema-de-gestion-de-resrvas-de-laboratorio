@@ -57,3 +57,24 @@ python manage.py createsuperuser
 - **Validación de choques**:
   - En el mismo laboratorio y fecha, no permite intervalos solapados.
 
+
+### Despliegue en Vercel
+
+El proyecto incluye configuracion para Vercel:
+
+- `vercel.json`: ejecuta migraciones y `collectstatic` durante el build.
+- `.python-version`: fija Python 3.12 para Vercel.
+- `.env.example`: lista las variables necesarias.
+- `settings.py`: usa SQLite en local y `DATABASE_URL` en produccion.
+
+Variables requeridas en Vercel:
+
+```text
+DJANGO_SECRET_KEY=una-clave-segura
+DEBUG=False
+DJANGO_ALLOWED_HOSTS=.vercel.app
+DJANGO_CSRF_TRUSTED_ORIGINS=https://*.vercel.app
+DATABASE_URL=postgres://usuario:password@host:5432/base_de_datos
+```
+
+Importante: para produccion usa Postgres u otra base externa. SQLite solo es para desarrollo local.
