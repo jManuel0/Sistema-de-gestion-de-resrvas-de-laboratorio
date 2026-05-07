@@ -1,20 +1,21 @@
-## Sistema de Gestión de Reservas de Laboratorios (Django)
+## Sistema de Gestion de Reservas de Laboratorios (Django)
 
 Proyecto: **`reservas_laboratorio_juanmanuel`**  
 App principal: **`reservas_juanmanuel`**
 
 ### Estructura
 
-- `reservas_laboratorio_juanmanuel/`: configuración del proyecto (settings/urls/asgi/wsgi)
-- `reservas_juanmanuel/`: app de reservas (modelo, vistas CBV, urls, formularios)
+- `reservas_laboratorio_juanmanuel/`: configuracion del proyecto (`settings`, `urls`, `asgi`, `wsgi`)
+- `reservas_juanmanuel/`: app de reservas (modelo, vistas, urls, formularios)
 - `templates/`
-  - `base.html`: plantilla base (Bootstrap)
+  - `base.html`: plantilla base
   - `registration/login.html`: login
-  - `reservas/`: pantallas del CRUD, filtros, estado y estadísticas
+  - `registration/register.html`: registro
+  - `reservas_juanmanuel/`: pantallas del CRUD, filtros y estadisticas
 - `db.sqlite3`: base de datos local
 - `requirements.txt`: dependencias
 
-### Entorno virtual (Windows + bash)
+### Entorno virtual
 
 ```bash
 python -m venv .venv
@@ -27,6 +28,7 @@ pip install -r requirements.txt
 
 ```bash
 source .venv/Scripts/activate
+pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
@@ -36,7 +38,7 @@ Abre `http://127.0.0.1:8000/`.
 ### Usuarios de prueba
 
 Estas credenciales funcionan usando el archivo `db.sqlite3` incluido en el proyecto.  
-Si se crea una base nueva desde cero, estos usuarios no existirán hasta volver a registrarlos.
+Si se crea una base nueva desde cero, estos usuarios no existiran hasta volver a registrarlos.
 
 - `Administrador`
   - Usuario: `carlos2`
@@ -48,39 +50,33 @@ Si se crea una base nueva desde cero, estos usuarios no existirán hasta volver 
   - Usuario: `felipe07`
   - Clave: `miguelfelipe1`
 
-### Roles (Docente / Administrador)
+### Roles
 
-- Se crean automáticamente los grupos **`Docente`** y **`Administrador`** al ejecutar `migrate` (signal `post_migrate`).
-- Recomendación para pruebas:
-  - Crea un superusuario (admin Django):
-
-```bash
-source .venv/Scripts/activate
-python manage.py createsuperuser
-```
-
-- Asigna usuarios a grupos desde `http://127.0.0.1:8000/admin/` → **Users** → **Groups**.
+- Se manejan los grupos `Docente`, `Administrador` y `Estudiante`.
+- Los usuarios pueden crearse desde registro o desde el panel `/admin/`.
+- Si usas una base nueva, debes volver a crear los usuarios o copiar el `db.sqlite3`.
 
 ### Reglas del sistema
 
-- **Docente**:
-  - Crea reservas (estado inicial: *Pendiente*)
-  - Solo puede **editar/eliminar** si su reserva está **Pendiente**
-- **Administrador**:
+- `Docente`
+  - Crea reservas
+  - Solo puede editar o eliminar sus reservas si estan en estado `Pendiente`
+- `Administrador`
   - Ve todas las reservas
-  - Puede **aprobar o rechazar** cualquier reserva
-- **Validación de choques**:
-  - En el mismo laboratorio y fecha, no permite intervalos solapados.
-
+  - Puede aprobar o rechazar cualquier reserva pendiente
+- `Estudiante`
+  - Puede iniciar sesion y consultar las reservas aprobadas
+- `Validacion de choques`
+  - En el mismo laboratorio y fecha no se permiten horarios solapados
 
 ### Despliegue en Vercel
 
 El proyecto incluye configuracion para Vercel:
 
-- `vercel.json`: ejecuta migraciones y `collectstatic` durante el build.
-- `.python-version`: fija Python 3.12 para Vercel.
-- `.env.example`: lista las variables necesarias.
-- `settings.py`: usa SQLite en local y `DATABASE_URL` en produccion.
+- `vercel.json`: ejecuta migraciones y `collectstatic` durante el build
+- `.python-version`: fija Python para despliegue
+- `.env.example`: lista las variables necesarias
+- `settings.py`: usa SQLite en local y `DATABASE_URL` en produccion
 
 Variables requeridas en Vercel:
 
