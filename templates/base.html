@@ -14,7 +14,7 @@
   <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-        <a class="navbar-brand" href="{% url 'reservas:lista' %}">Reservas</a>
+        <a class="navbar-brand" href="{% url 'reservas:home' %}">Reservas</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -30,13 +30,7 @@
         <div class="collapse navbar-collapse" id="nav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'reservas:lista' %}">Mis reservas</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'reservas:crear' %}">Nueva reserva</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'reservas:estadisticas' %}">Estadísticas</a>
+              <a class="nav-link" href="{% url 'reservas:home' %}">Inicio</a>
             </li>
           </ul>
 

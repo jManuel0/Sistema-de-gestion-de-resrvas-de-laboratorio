@@ -120,5 +120,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'reservas:login'
-LOGIN_REDIRECT_URL = 'reservas:lista'
+LOGIN_REDIRECT_URL = 'reservas:home'
 LOGOUT_REDIRECT_URL = 'reservas:login'
