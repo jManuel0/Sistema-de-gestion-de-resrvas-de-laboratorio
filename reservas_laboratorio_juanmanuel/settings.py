@@ -104,6 +104,11 @@ if DATABASE_URL:
         conn_max_age=600,
         ssl_require=IS_VERCEL,
     )
+elif IS_VERCEL:
+    raise RuntimeError(
+        'DATABASE_URL no esta configurada. En Vercel debes usar una base de datos externa, '
+        'por ejemplo Postgres, porque SQLite no es persistente en produccion.'
+    )
 
 
 # Password validation

@@ -9,6 +9,6 @@ def crear_roles_basicos(**kwargs):
     if Group is None:
         return
 
-    for nombre in ['Docente', 'Administrador']:
+    for nombre in ['Docente', 'Administrador', 'Estudiante']:
         Group.objects.get_or_create(name=nombre)
 
