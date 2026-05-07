@@ -1,12 +1,12 @@
 import csv
 
-from django.db.models import Count
+from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import Group
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib import messages
+from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -48,12 +48,8 @@ class UsuarioRegistroView(CreateView):
         nombre_grupo = form.cleaned_data['rol']
         grupo, _ = Group.objects.get_or_create(name=nombre_grupo)
         self.object.groups.add(grupo)
-        if nombre_grupo == 'Administrador':
-            self.object.is_staff = True
-            self.object.save()
-        elif nombre_grupo == 'Estudiante':
-            self.object.is_staff = False
-            self.object.save()
+        self.object.is_staff = nombre_grupo == 'Administrador'
+        self.object.save()
         login(self.request, self.object)
         messages.success(self.request, 'Tu cuenta fue creada correctamente.')
         return response

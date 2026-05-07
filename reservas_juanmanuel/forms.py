@@ -40,9 +40,7 @@ class ReservaForm(forms.ModelForm):
             reservas_cruzadas = Reserva.objects.filter(
                 laboratorio__iexact=laboratorio.strip(),
                 fecha=fecha,
-            ).filter(
-                Q(hora_inicio__lt=hora_fin) & Q(hora_fin__gt=hora_inicio)
-            )
+            ).filter(Q(hora_inicio__lt=hora_fin) & Q(hora_fin__gt=hora_inicio))
 
             if self.instance.pk:
                 reservas_cruzadas = reservas_cruzadas.exclude(pk=self.instance.pk)
